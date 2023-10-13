@@ -1,0 +1,12 @@
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/bin/Debug/net6.0/Serializer.deps.json
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/bin/Debug/net6.0/Serializer.dll
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/bin/Debug/net6.0/Serializer.pdb
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/obj/Debug/net6.0/Serializer.csproj.AssemblyReference.cache
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/obj/Debug/net6.0/Serializer.GeneratedMSBuildEditorConfig.editorconfig
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/obj/Debug/net6.0/Serializer.AssemblyInfoInputs.cache
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/obj/Debug/net6.0/Serializer.AssemblyInfo.cs
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/obj/Debug/net6.0/Serializer.csproj.CoreCompileInputs.cache
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/obj/Debug/net6.0/Serializer.dll
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/obj/Debug/net6.0/refint/Serializer.dll
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/obj/Debug/net6.0/Serializer.pdb
+/Users/geo/Desktop/Education/Northwestern University/2023 Fall/CS376 (Computer Game Design and Development)/Codebase/Serializer/Serializer/obj/Debug/net6.0/ref/Serializer.dll

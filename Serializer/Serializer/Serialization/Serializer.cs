@@ -190,28 +190,32 @@ namespace Assets.Serialization
             switch (o)
             {
                 case null:
-                    throw new NotImplementedException("Fill me in");
+                    Write("null");
                     break;
 
                 case int i:
-                    throw new NotImplementedException("Fill me in");
+                    Write(i);
                     break;
 
                 case float f:
-                    throw new NotImplementedException("Fill me in");
+                    Write(f);
                     break;
 
                 // Not: don't worry about handling strings that contain quote marks
                 case string s:
-                    throw new NotImplementedException("Fill me in");
+                    if (!s[0].Equals('#'))
+                    {
+                        s = "\"" + s + "\"";
+                    }
+                    Write(s);
                     break;
 
                 case bool b:
-                    throw new NotImplementedException("Fill me in");
+                    Write(b);
                     break;
 
                 case IList list:
-                    throw new NotImplementedException("Fill me in");
+                    WriteList(list);
                     break;
 
                 default:
@@ -231,7 +235,35 @@ namespace Assets.Serialization
         /// <param name="o">Object to serialize</param>
         private void WriteComplexObject(object o)
         {
-            throw new NotImplementedException("Fill me in");
+            (int id, bool isNew) = GetId(o);
+            if (isNew)
+            {
+                WriteObject("#" + id);
+                WriteBracketedExpression(
+                    "{ ",
+                    () =>
+                    {
+                        WriteField("type", o.GetType().Name, true);
+                        IEnumerable<KeyValuePair<string, object>> fields = Utilities.SerializedFields(o);
+                        foreach (KeyValuePair<string, object> field in fields)
+                        {
+                            var fieldValue = field.Value;
+                            if (fieldValue is not null && idTable.TryGetValue(fieldValue, out id))
+                            {
+                                fieldValue = "#" + id;
+                            }
+                            WriteField(field.Key, fieldValue, false);
+                            //Console.Write(field + "\n");
+                            //Console.Write(o + "\n");
+                            //Console.Write(field.Key + "\t");
+                            //Console.Write(field.Value + "\n");
+                        }
+                    },
+                    " }");
+            } else
+            {
+                WriteObject("#" + id);
+            }
         }
     }
 }
