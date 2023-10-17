@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public float CoolDownTime = 1;
 
+    private float timeTracker;
+
     /// <summary>
     /// Prefab for the orb it fires
     /// </summary>
@@ -66,6 +68,7 @@ public class Enemy : MonoBehaviour
     {
         player = FindObjectOfType<Player>().transform;
         rigidBody = GetComponent<Rigidbody2D>();
+        timeTracker = Time.time;
     }
 
     /// <summary>
@@ -74,7 +77,11 @@ public class Enemy : MonoBehaviour
     // ReSharper disable once UnusedMember.Local
     void Update()
     {
-        // TODO
+        if (Time.time > timeTracker)
+        {
+            Fire();
+            timeTracker += CoolDownTime;
+        }
     }
 
     /// <summary>
@@ -83,7 +90,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Fire()
     {
-        // TODO
+        var orbPos = new Vector2(HeadingToPlayer.x + rigidBody.position.x, HeadingToPlayer.y + rigidBody.position.y);
+        var enemyOrb = Instantiate(OrbPrefab, orbPos, Quaternion.identity);
+        enemyOrb.GetComponent<Rigidbody2D>().velocity = HeadingToPlayer * OrbVelocity;
+        enemyOrb.GetComponent<Rigidbody2D>().mass = OrbMass;
     }
 
     /// <summary>
