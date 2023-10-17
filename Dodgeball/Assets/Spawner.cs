@@ -28,7 +28,6 @@ public class Spawner : MonoBehaviour
     // ReSharper disable once UnusedMember.Local
     void Update()
     {
-        //Debug.Log(Time.time);
         if (Time.time > timeTracker)
         {
             Instantiate(Prefab, SpawnUtilities.RandomFreePoint(FreeRadius), Quaternion.identity);
