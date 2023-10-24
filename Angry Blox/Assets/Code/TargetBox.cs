@@ -17,8 +17,20 @@ public class TargetBox : MonoBehaviour
             Scored();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            Scored();
+        }
+    }
+
     private void Scored()
     {
-        // FILL ME IN
+        if (GetComponent<SpriteRenderer>().color != Color.green)
+        {
+            GetComponent<SpriteRenderer>().color = Color.green;
+            ScoreKeeper.AddToScore(GetComponent<Rigidbody2D>().mass);
+        }
     }
 }

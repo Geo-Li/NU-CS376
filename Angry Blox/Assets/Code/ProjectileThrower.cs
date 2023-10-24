@@ -71,7 +71,12 @@ public class ProjectileThrower : MonoBehaviour {
     /// <returns></returns>
     bool WaitingForPhysicsToSettle()
     {
-        return true;  // Replace this
+        var isNotSettled = false;
+        foreach (Rigidbody2D rb in FindObjectsOfType<Rigidbody2D>())
+        {
+            isNotSettled = isNotSettled || IsActive(rb);
+        }
+        return isNotSettled;  // Replace this
     }
 
     /// <summary>
@@ -86,6 +91,16 @@ public class ProjectileThrower : MonoBehaviour {
     internal void Update()
     {
         FireControl();
+        if (Input.GetKeyDown("escape"))
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
+        if (firingState == FiringState.Firing && !WaitingForPhysicsToSettle())
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
     }
 
     /// <summary>
