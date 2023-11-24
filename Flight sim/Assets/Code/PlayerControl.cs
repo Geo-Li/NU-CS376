@@ -53,7 +53,6 @@ public class PlayerControl : MonoBehaviour {
     /// </summary>
     private Rigidbody playerRB;
 
-
     /// <summary>
     /// Magic layer mask code for the updraft(s)
     /// </summary>
@@ -77,6 +76,8 @@ public class PlayerControl : MonoBehaviour {
     /// Current thrust (forward force provided by engines
     /// </summary>
     private float thrust;
+
+
 #endregion
 
     /// <summary>
@@ -85,6 +86,36 @@ public class PlayerControl : MonoBehaviour {
     internal void Start() {
         playerRB = GetComponent<Rigidbody>();
         playerRB.velocity = transform.forward*3;
+    }
+
+    void FixedUpdate()
+    {
+        roll = Mathf.Lerp(roll, (Input.GetAxis("Horizontal") * RollRange), ForwardDragCoefficient);
+        pitch = Mathf.Lerp(pitch, (Input.GetAxis("Vertical") * PitchRange), ForwardDragCoefficient);
+        yaw += -1 * roll * RotationalSpeed * Time.deltaTime;
+        playerRB.MoveRotation(Quaternion.Euler(pitch, yaw, roll));
+        thrust = Input.GetAxis("Thrust") * MaximumThrust;
+        if (thrust > 0)
+        {
+            playerRB.AddForce(transform.forward * thrust);
+        }
+        var v_rel = playerRB.velocity;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, transform.localScale.x, LayerMask.GetMask("Updrafts"));
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.GetComponent<Updraft>() != null)
+            {
+                v_rel = -1 * (hitCollider.GetComponent<Updraft>().WindVelocity - playerRB.velocity);
+            }
+        }
+        var v_f = Vector3.Dot(-v_rel, transform.forward);
+        // var liftForce = LiftCoefficient * Mathf.Pow(v_f, 2) * transform.up;
+        playerRB.AddForce(LiftCoefficient * Mathf.Pow(v_f, 2) * transform.up);
+        // var forwardDrag = Mathf.Sign(v_f) * ForwardDragCoefficient * Mathf.Pow(v_f, 2) * transform.forward;
+        playerRB.AddForce(Mathf.Sign(v_f) * ForwardDragCoefficient * Mathf.Pow(v_f, 2) * transform.forward);
+        var v_up = Vector3.Dot(-v_rel, transform.up);
+        // var verticalDrag = Mathf.Sign(v_up) * VerticalDragCoefficient * Mathf.Pow(v_f, 2) * transform.up;
+        playerRB.AddForce(Mathf.Sign(v_up) * VerticalDragCoefficient * Mathf.Pow(v_up, 2) * transform.up);
     }
 
     /// <summary>
@@ -99,6 +130,18 @@ public class PlayerControl : MonoBehaviour {
             GameOverText.text = "You Win!";
         } else {
             GameOverText.text = "OOPS";
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.GetComponent<LandingPlatform>() != null && playerRB.velocity.y < collision.collider.GetComponent<LandingPlatform>().MaxLandingSpeed)
+        {
+            OnGameOver(true);
+        }
+        else
+        {
+            OnGameOver(false);
         }
     }
 
